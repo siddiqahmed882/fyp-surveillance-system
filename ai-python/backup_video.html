@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <video width="640" height="360" controls>
+      <source src="./2023-05-04_09-51-52.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <script>
+        var storageRef = firebase.storage().ref();
+        var videoRef = storageRef.child('videos/my_video.mp4');
+        videoRef.getDownloadURL().then(function(url) {
+        var videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.src = url;
+        });
+
+    </script>
+  </body>
+</html>

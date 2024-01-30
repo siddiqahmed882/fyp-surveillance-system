@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "Fire Detection System",
+    "slug": "fire-detection-system",
+    "extra": {
+      "eas": {
+        "projectId": "0a23e8c9-1039-4d24-9150-af1c0367a977"
+      }
+    },
+    "owner": "zain_0_o",
+    "android": {
+      "package": "com.zain_0_o.firedetectionsystem",
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "permissions": ["NOTIFICATIONS"]
+    },
+    "plugins": [
+      "@react-native-firebase/app"
+    ]
+  }
+}

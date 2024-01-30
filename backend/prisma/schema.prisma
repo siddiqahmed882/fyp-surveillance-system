@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// prisma/schema.prisma
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+  // directUrl = env("DIRECT_URL")
+}
+
+// enum Role {
+//   client
+//   admin
+//   company
+// }
+
+model User {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  role          String   @default("client")
+  password      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  refreshToken RefreshToken?
+  FcmToken     FcmToken[]
+  Notification Notification[]
+  UserRoom     UserRoom[]
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model FcmToken {
+  id        Int    @id @default(autoincrement())
+  user_id   Int
+  fcm_token String
+
+  user      User     @relation(fields: [user_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notification {
+  id      Int    @id @default(autoincrement())
+  user_id Int
+  title   String
+  body    String
+
+  user      User     @relation(fields: [user_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserRoom {
+  id          Int    @id @default(autoincrement())
+  user_id     Int
+  device_type String
+  device_name String
+  device_id   String
+  device_info String
+  room_no     Int
+  room_name   String
+
+  user      User     @relation(fields: [user_id], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AccessLink {
+  id        Int    @id @default(autoincrement())
+  device_id String
+  data      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
